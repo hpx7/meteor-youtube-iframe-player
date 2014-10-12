@@ -8,7 +8,7 @@ YTPlayer = function (playerId, videoTemplate, playerVars) {
   var self = this;
   var ready = new ReactiveVar(false);
 
-  onYouTubeIframeAPIReady = function () {
+  window.onYouTubeIframeAPIReady = function () {
     self.player = new YT.Player(playerId, {
       events: {
         'onReady': function () {
