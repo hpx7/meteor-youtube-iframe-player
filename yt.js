@@ -1,7 +1,5 @@
 var downloadIFrameAPI = _.once(function () {
-  Meteor.startup(function() {
-    $.getScript('//www.youtube.com/iframe_api');
-  });
+  $.getScript('//www.youtube.com/iframe_api');
 });
 
 YTPlayer = function (playerId, videoTemplate, playerVars) {
@@ -18,7 +16,11 @@ YTPlayer = function (playerId, videoTemplate, playerVars) {
       playerVars: playerVars || {}
     });
     videoTemplate.rendered = onYouTubeIframeAPIReady;
-  }
+  };
+
+  videoTemplate.created = function () {
+    downloadIFrameAPI();
+  };
 
   videoTemplate.destroyed = function () {
     ready.set(false);
@@ -27,6 +29,4 @@ YTPlayer = function (playerId, videoTemplate, playerVars) {
   this.ready = function () {
     return ready.get();
   };
-
-  downloadIFrameAPI();
 };
