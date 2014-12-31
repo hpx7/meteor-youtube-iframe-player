@@ -1,13 +1,9 @@
-var downloadIFrameAPI = _.once(function () {
-  $.getScript('//www.youtube.com/iframe_api');
-});
-
 YTPlayer = function (playerId, videoTemplate, playerVars) {
   var self = this;
   var ready = new ReactiveVar(false);
 
   window.onYouTubeIframeAPIReady = function () {
-    self.player = new YT.Player(playerId, {
+    self.player = new window.YT.Player(playerId, {
       events: {
         'onReady': function () {
           ready.set(true);
@@ -16,10 +12,6 @@ YTPlayer = function (playerId, videoTemplate, playerVars) {
       playerVars: playerVars || {}
     });
     videoTemplate.rendered = onYouTubeIframeAPIReady;
-  };
-
-  videoTemplate.created = function () {
-    downloadIFrameAPI();
   };
 
   videoTemplate.destroyed = function () {
