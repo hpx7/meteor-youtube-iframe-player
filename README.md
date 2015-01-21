@@ -13,7 +13,7 @@ $ meteor add hpx7:youtube-iframe-player
 
 ## Usage
 
-The arguements required to initialize the player are the player's DOM id, the video template, and any playerVars for the iframe player.
+The arguments required to initialize the player are the player's DOM id, the video template, and any playerVars for the iframe player.
 
 Given a template like the following
 ```javascript
