@@ -1,8 +1,8 @@
-YTPlayer = function (playerId, videoTemplate, playerVars) {
+YTPlayer = function (playerId, playerTemplate, playerVars) {
   var self = this;
   var ready = new ReactiveVar(false);
 
-  window.onYouTubeIframeAPIReady = function () {
+  playerTemplate.rendered = function () {
     self.player = new window.YT.Player(playerId, {
       events: {
         'onReady': function () {
@@ -11,10 +11,9 @@ YTPlayer = function (playerId, videoTemplate, playerVars) {
       },
       playerVars: playerVars || {}
     });
-    videoTemplate.rendered = onYouTubeIframeAPIReady;
   };
 
-  videoTemplate.destroyed = function () {
+  playerTemplate.destroyed = function () {
     ready.set(false);
   };
 
