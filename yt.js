@@ -1,9 +1,28 @@
-YTPlayer = function (playerId, playerTemplate, playerVars) {
+var getTemplate = (function () {
+  var templates = {};
+  return function (name) {
+    if (!templates[name])
+      templates[name] = Template.fromString('<div id="' + name + '"></div>');
+    return templates[name];
+  };
+})();
+
+Template.registerHelper('YTPlayer', function () {
+  return getTemplate(this.name || 'ytplayer');
+});
+
+YTPlayer = function (name, playerVars) {
+  if (arguments.length === 1) {
+    playerVars = name;
+    name = 'ytplayer';
+  }
+
   var self = this;
   var ready = new ReactiveVar(false);
+  var playerTemplate = getTemplate(name);
 
   playerTemplate.rendered = function () {
-    self.player = new window.YT.Player(playerId, {
+    self.player = new window.YT.Player(name, {
       events: {
         'onReady': function () {
           ready.set(true);
@@ -17,7 +36,7 @@ YTPlayer = function (playerId, playerTemplate, playerVars) {
     ready.set(false);
   };
 
-  this.ready = function () {
+  self.ready = function () {
     return ready.get();
   };
 };

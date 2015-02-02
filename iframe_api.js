@@ -1,11 +1,11 @@
 if (!window['YT']) {
-  var YT = {
+  var YT = window.YT = {
     loading: 0,
     loaded: 0
   };
 }
 if (!window['YTConfig']) {
-  var YTConfig = {
+  var YTConfig = window.YT = {
     'host': 'http://www.youtube.com'
   };
 }
