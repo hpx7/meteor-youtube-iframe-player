@@ -22,7 +22,7 @@ YTPlayer = function (name, playerVars) {
   var playerTemplate = getTemplate(name);
 
   playerTemplate.rendered = function () {
-    self.player = new window.YT.Player(name, {
+    self.player = new YT.Player(name, {
       events: {
         'onReady': function () {
           ready.set(true);

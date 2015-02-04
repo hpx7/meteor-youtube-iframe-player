@@ -20,7 +20,7 @@ if (!YT.loading) {
         l.push(f);
       }
     };
-    window.onYTReady = function () {
+    onYTReady = function () {
       YT.loaded = 1;
       for (var i = 0; i < l.length; i++) {
         try {
