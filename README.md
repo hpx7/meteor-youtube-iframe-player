@@ -13,21 +13,13 @@ $ meteor add hpx7:youtube-iframe-player
 
 ## Usage
 
-The arguments required to initialize the player are the player's DOM id, the video template, and any playerVars for the iframe player.
+```javascript
+new YTPlayer([name], playerVars)
+```
+`name` is optional and allows you to distinguish between multiple players (`ytplayer` by default).
+`playerVars` are options passed to [YouTube's iFrame API](https://developers.google.com/youtube/iframe_api_reference#Loading_a_Video_Player).
 
-Given a template like the following
-```javascript
-<template name="video">
-  <div class="video-container">
-    <div id="player"></div>
-  </div>
-</template>
-```
-initialize the player like this
-```javascript
-var yt = new YTPlayer('player', Template.video, {rel: 0, playsinline: 1});
-```
-The `yt` object contains a reactive `ready` function and exposes the underlying youtube `player` object.
+Now just include `{{> YTPlayer name="ytplayer"}}` in your template where you'd like the player to be rendered. The name parameter is optional and defaults to `ytplayer`
 
 ## Examples
 
