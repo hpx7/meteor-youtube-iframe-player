@@ -11,6 +11,10 @@ Template.registerHelper('YTPlayer', function () {
   return getTemplate(this.name || 'ytplayer');
 });
 
+Meteor.startup(function () {
+  $.getScript('//www.youtube.com/iframe_api');
+});
+
 YTPlayer = function (name, playerVars) {
   if (arguments.length === 1) {
     playerVars = name;
@@ -21,7 +25,7 @@ YTPlayer = function (name, playerVars) {
   var ready = new ReactiveVar(false);
   var playerTemplate = getTemplate(name);
 
-  playerTemplate.rendered = function () {
+  function initPlayer () {
     self.player = new YT.Player(name, {
       events: {
         'onReady': function () {
@@ -30,6 +34,11 @@ YTPlayer = function (name, playerVars) {
       },
       playerVars: playerVars || {}
     });
+  }
+
+  window.onYouTubeIframeAPIReady = function () {
+    initPlayer();
+    playerTemplate.rendered = initPlayer;
   };
 
   playerTemplate.destroyed = function () {
