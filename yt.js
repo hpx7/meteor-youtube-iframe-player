@@ -11,6 +11,12 @@ Template.registerHelper('YTPlayer', function () {
   return getTemplate(this.name || 'ytplayer');
 });
 
+var iframeApiReady = new ReactiveVar(false);
+
+window.onYouTubeIframeAPIReady = function () {
+  iframeApiReady.set(true);
+};
+
 Meteor.startup(function () {
   $.getScript('//www.youtube.com/iframe_api');
 });
@@ -22,30 +28,27 @@ YTPlayer = function (name, playerVars) {
   }
 
   var self = this;
-  var ready = new ReactiveVar(false);
+  var playerReady = new ReactiveVar(false);
   var playerTemplate = getTemplate(name);
 
-  function initPlayer () {
-    self.player = new YT.Player(name, {
-      events: {
-        'onReady': function () {
-          ready.set(true);
-        }
-      },
-      playerVars: playerVars || {}
-    });
-  }
-
-  window.onYouTubeIframeAPIReady = function () {
-    initPlayer();
-    playerTemplate.rendered = initPlayer;
+  playerTemplate.rendered = function () {
+    if (iframeApiReady.get()) {
+      self.player = new YT.Player(name, {
+        events: {
+          'onReady': function () {
+            playerReady.set(true);
+          }
+        },
+        playerVars: playerVars || {}
+      });
+    }
   };
 
   playerTemplate.destroyed = function () {
-    ready.set(false);
+    playerReady.set(false);
   };
 
   self.ready = function () {
-    return ready.get();
+    return playerReady.get();
   };
 };
