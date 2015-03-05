@@ -32,16 +32,18 @@ YTPlayer = function (name, playerVars) {
   var playerTemplate = getTemplate(name);
 
   playerTemplate.rendered = function () {
-    if (iframeApiReady.get()) {
-      self.player = new YT.Player(name, {
-        events: {
-          'onReady': function () {
-            playerReady.set(true);
-          }
-        },
-        playerVars: playerVars || {}
-      });
-    }
+    this.autorun(function () {
+      if (iframeApiReady.get()) {
+        self.player = new YT.Player(name, {
+          events: {
+            'onReady': function () {
+              playerReady.set(true);
+            }
+          },
+          playerVars: playerVars || {}
+        });
+      }
+    });
   };
 
   playerTemplate.destroyed = function () {
