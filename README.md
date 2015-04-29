@@ -19,7 +19,7 @@ new YTPlayer([name], playerVars)
 `name` is optional and allows you to distinguish between multiple players (`ytplayer` by default).
 `playerVars` are options passed to [YouTube's iFrame API](https://developers.google.com/youtube/iframe_api_reference#Loading_a_Video_Player).
 
-Now just include `{{> YTPlayer name="ytplayer"}}` in your template where you'd like the player to be rendered. The name parameter is optional and defaults to `ytplayer`
+Now just include `{{> YTPlayer name="<my_player_name>"}}` in your template where you'd like the player to be rendered. The name parameter is optional and defaults to `ytplayer`
 
 ## Examples
 
